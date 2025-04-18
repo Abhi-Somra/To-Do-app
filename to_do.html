@@ -1,0 +1,94 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+</head>
+<style>
+    .add-button,.show-button{
+        border: none;
+        font-weight: bold;
+        color: white;
+        background-color: green;
+        padding: 12px 39px;
+        cursor: pointer;
+    }
+    .del-button{
+        border: none;
+        font-weight: bold;
+        padding: 10px;
+        /* margin-left: 302px; */
+        background-color: red;
+        color: white;
+        cursor: pointer;
+    }
+    input{
+        padding: 10px;
+    }
+    .inner-html{
+        display: grid;
+        margin-top: 10px;
+        grid-template-columns: 200px 117px 100px;
+        row-gap: 10px;
+    }
+</style>
+<body>
+    <h1>To Do List</h1>
+    <input type="text" placeholder="Task" class="text-js" onkeydown="key()">
+    <input type="date" class="date-js">
+    <button onclick="add()" class="add-button">Add</button>
+    <button onclick="show()" class="Show-button">Show Tasks</button>
+    <div class="inner-html"></div>
+    
+</body>
+<script>
+    const toDoArray = [];
+    renderHtml();
+
+    function renderHtml()
+    {
+    let innerHtml = '';
+    for(let i=0;i<=toDoArray.length-1;i++)
+{  
+    const date = document.querySelector('.date-js').value;
+    const toDoList = `<div>${toDoArray[i]}</div>
+        <div>${date}</div>
+        <button onclick='toDoArray.splice(${i},1);renderHtml()';
+        class='del-button'>Delete</button>`;
+    innerHtml += toDoList;
+}
+document.querySelector('.inner-html').innerHTML = innerHtml;
+    }
+
+    function add()
+    {
+        const inputElement = document.querySelector('.text-js');
+        toDoArray.push(inputElement.value);
+        alert(`Task : ${inputElement.value}\n Added Successfully!`)
+        inputElement.value = '';
+        // renderHtml();
+    };
+    function key()
+    {
+      if (event.key==='Enter')
+    {
+        add();
+    }  
+    };
+    function show()
+    {
+        const showElement = document.querySelector('.show-button');
+        renderHtml();
+        if(showElement.innerText === 'Show Tasks')
+        {
+            showElement.innerText = 'Hide Tasks';
+        }
+        else
+        {
+            showElement.innerText = 'Show Tasks';
+            // localStorage.removeItem('toDoArray');
+            document.querySelector('.inner-html').innerHTML = '';
+        }
+    }
+</script>
+</html>
